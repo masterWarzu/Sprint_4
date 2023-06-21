@@ -6,23 +6,23 @@ import org.openqa.selenium.WebElement;
 
 public class OrderPageScooter
 {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // локаторы первой страницы заказа
-    private By nameField = By.xpath(".//input[@placeholder='* Имя']");
-    private By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
-    private By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
-    private By metroField = By.xpath(".//input[@placeholder='* Станция метро']");
-    private By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
-    private By buttonNext = By.xpath(".//div/button[text()='Далее']");
+    private final By nameField = By.xpath(".//input[@placeholder='* Имя']");
+    private final By surnameField = By.xpath(".//input[@placeholder='* Фамилия']");
+    private final By addressField = By.xpath(".//input[@placeholder='* Адрес: куда привезти заказ']");
+    private final By metroField = By.xpath(".//input[@placeholder='* Станция метро']");
+    private final By phoneField = By.xpath(".//input[@placeholder='* Телефон: на него позвонит курьер']");
+    private final By buttonNext = By.xpath(".//div/button[text()='Далее']");
 
     // локаторы второй страницы заказа
-    private By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
-    private By rentalPeriodField = By.className("Dropdown-placeholder");
-    private By commentsField = By.xpath("//div[@class='Input_InputContainer__3NykH']/" +
+    private final By dateField = By.xpath(".//input[@placeholder='* Когда привезти самокат']");
+    private final By rentalPeriodField = By.className("Dropdown-placeholder");
+    private final By commentsField = By.xpath("//div[@class='Input_InputContainer__3NykH']/" +
                                                                     "input[@placeholder='Комментарий для курьера']");
-    private By buttonOrderFinal = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
-    private By buttonConfirm = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Да']");
+    private final By buttonOrderFinal = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
+    private final By buttonConfirm = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Да']");
 
     public OrderPageScooter(WebDriver driver)
     {

@@ -9,26 +9,26 @@ import static org.junit.Assert.*;
 
 class HomePageScooter
 {
-    private WebDriver driver;
+    private final WebDriver driver;
 
     // локатор согласия с куками
-    private By cookieButton = By.id("rcc-confirm-button");
+    private final By cookieButton = By.id("rcc-confirm-button");
 
     // локатор верхней кнопки "Заказать"
-    private By orderButtonUp = By.className("Button_Button__ra12g");
+    private final By orderButtonUp = By.className("Button_Button__ra12g");
 
     // локатор нижней кнопки "Заказать"
-    private By orderButtonDown = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
+    private final By orderButtonDown = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
 
     // локаторы для открывающегося списка вопросов
-    private By zeroQuestion = By.xpath(".//*[@id='accordion__heading-0']");
-    private By firstQuestion = By.xpath(".//*[@id='accordion__heading-1']");
-    private By secondQuestion = By.xpath(".//*[@id='accordion__heading-2']");
-    private By thirdQuestion = By.xpath(".//*[@id='accordion__heading-3']");
-    private By fourthQuestion = By.xpath(".//*[@id='accordion__heading-4']");
-    private By fifthQuestion = By.xpath(".//*[@id='accordion__heading-5']");
-    private By sixthQuestion = By.xpath(".//*[@id='accordion__heading-6']");
-    private By seventhQuestion = By.xpath(".//*[@id='accordion__heading-7']");
+    private final By zeroQuestion = By.xpath(".//*[@id='accordion__heading-0']");
+    private final By firstQuestion = By.xpath(".//*[@id='accordion__heading-1']");
+    private final By secondQuestion = By.xpath(".//*[@id='accordion__heading-2']");
+    private final By thirdQuestion = By.xpath(".//*[@id='accordion__heading-3']");
+    private final By fourthQuestion = By.xpath(".//*[@id='accordion__heading-4']");
+    private final By fifthQuestion = By.xpath(".//*[@id='accordion__heading-5']");
+    private final By sixthQuestion = By.xpath(".//*[@id='accordion__heading-6']");
+    private final By seventhQuestion = By.xpath(".//*[@id='accordion__heading-7']");
 
     // конструктор класса
     public HomePageScooter(WebDriver driver)
@@ -55,11 +55,11 @@ class HomePageScooter
 
 
     // метод для нажатия на первый открывающийся вопрос
-    public void ZeroQuestion()
+    public void Zero()
     {
         driver.findElement(zeroQuestion).click();
         new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-0']/p")));;
+                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-0']/p")));
         String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-0']/p")).getText();
         String expectAnswer = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
         assertEquals(expectAnswer, actualAnswer);
