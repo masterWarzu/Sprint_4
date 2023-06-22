@@ -14,6 +14,7 @@ public class OrderPageScooterTest
 {
     private WebDriver driver;
 
+    private final int choiceButton;
     private final String username;
     private final String usersurname;
     private final String useraddress;
@@ -24,10 +25,11 @@ public class OrderPageScooterTest
     private final String colorScooter;
     private final String textComments;
 
-    public OrderPageScooterTest(String username, String usersurname, String useraddress, String nameMetroStation,
+    public OrderPageScooterTest(int choiceButton, String username, String usersurname, String useraddress, String nameMetroStation,
                                 String userphonenumber, String days, int countDays, String colorScooter,
                                 String textComments)
     {
+        this.choiceButton = choiceButton;
         this.username = username;
         this.usersurname = usersurname;
         this.useraddress = useraddress;
@@ -44,9 +46,9 @@ public class OrderPageScooterTest
     {
         return new Object[][]
         {
-            {"Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321", "19.06.2023", 2,
+            {1, "Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321", "19.06.2023", 2,
                     "black", "Я сделяль!"},
-            {"Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки", "85556662211",
+            {2, "Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки", "85556662211",
                     "24.06.2023", 5, "grey", "А розовые самокаты есть у вас вообще?!"},
         };
     }
@@ -64,18 +66,14 @@ public class OrderPageScooterTest
     {
         HomePageScooter objHomePage = new HomePageScooter(driver);
         objHomePage.clickCookieButton();    // нажимает на согласие c куками
-        objHomePage.clickOrderButtonUp();   // нажатие на верхнюю кнопку заказа
-        OrderPageScooter objPageOrderScooter = new OrderPageScooter(driver);    //создаётся экземпляр класса
-        objPageOrderScooter.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days,
-                                  countDays, colorScooter, textComments);
-    }
-
-    @Test
-    public void orderButtonDown()
-    {
-        HomePageScooter objHomePage = new HomePageScooter(driver);
-        objHomePage.clickCookieButton();    // нажимает на согласие c куками
-        objHomePage.clickOrderButtonDown(); // нажатие на нижнюю кнопку заказа
+        if(choiceButton == 1)
+        {
+            objHomePage.clickOrderButtonUp();   // нажатие на верхнюю кнопку заказа
+        }
+        else
+        {
+            objHomePage.clickOrderButtonDown(); // нажатие на нижнюю кнопку заказа
+        }
         OrderPageScooter objPageOrderScooter = new OrderPageScooter(driver);    //создаётся экземпляр класса
         objPageOrderScooter.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days,
                                   countDays, colorScooter, textComments);
