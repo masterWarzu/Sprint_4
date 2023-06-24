@@ -8,13 +8,14 @@ import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
+import static org.junit.Assert.assertTrue;
 
 @RunWith(Parameterized.class)
 public class OrderPageScooterTest
 {
     private WebDriver driver;
 
-    private final int choiceButton;
+    private final String buttonChoice;
     private final String username;
     private final String usersurname;
     private final String useraddress;
@@ -25,11 +26,11 @@ public class OrderPageScooterTest
     private final String colorScooter;
     private final String textComments;
 
-    public OrderPageScooterTest(int choiceButton, String username, String usersurname, String useraddress, String nameMetroStation,
-                                String userphonenumber, String days, int countDays, String colorScooter,
-                                String textComments)
+    public OrderPageScooterTest(String buttonChoice, String username, String usersurname, String useraddress,
+                                String nameMetroStation, String userphonenumber, String days, int countDays,
+                                String colorScooter, String textComments)
     {
-        this.choiceButton = choiceButton;
+        this.buttonChoice = buttonChoice;
         this.username = username;
         this.usersurname = usersurname;
         this.useraddress = useraddress;
@@ -44,13 +45,14 @@ public class OrderPageScooterTest
     @Parameterized.Parameters
     public static Object[][] orderData()
     {
+        Constants locator = new Constants();
         return new Object[][]
-        {
-            {1, "Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321", "19.06.2023", 2,
-                    "black", "Я сделяль!"},
-            {2, "Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки", "85556662211",
-                    "24.06.2023", 5, "grey", "А розовые самокаты есть у вас вообще?!"},
-        };
+                {
+                        {locator.UP_ORDER_BUTTON, "Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321", "19.06.2023", 2,
+                                "black", "Тут могла быть ваша реклама."},
+                        {locator.DOWN_ORDER_BUTTON, "Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки", "85556662211",
+                                "24.06.2023", 5, "grey", "А розовые самокаты есть у вас вообще?!"},
+                };
     }
 
     @Before
@@ -62,21 +64,16 @@ public class OrderPageScooterTest
     }
 
     @Test
-    public void orderButtonUp()
+    public void clickOrderButton()
     {
         HomePageScooter objHomePage = new HomePageScooter(driver);
-        objHomePage.clickCookieButton();    // нажимает на согласие c куками
-        if(choiceButton == 1)
-        {
-            objHomePage.clickOrderButtonUp();   // нажатие на верхнюю кнопку заказа
-        }
-        else
-        {
-            objHomePage.clickOrderButtonDown(); // нажатие на нижнюю кнопку заказа
-        }
-        OrderPageScooter objPageOrderScooter = new OrderPageScooter(driver);    //создаётся экземпляр класса
-        objPageOrderScooter.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days,
-                                  countDays, colorScooter, textComments);
+        objHomePage.clickCookieButton();
+        objHomePage.clickOrderButton(buttonChoice);
+        OrderPageScooter objOrderPage = new OrderPageScooter(driver);
+        objOrderPage.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days,
+                countDays, colorScooter, textComments);
+
+        assertTrue("Отсутствует окно подтверждения.", objOrderPage.checkConfirmationOfAnOrder());
     }
 
     @After

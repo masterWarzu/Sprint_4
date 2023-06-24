@@ -5,32 +5,34 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-import static org.junit.Assert.*;
 
 class HomePageScooter
 {
     private final WebDriver driver;
 
-    // локатор согласия с куками
     private final By cookieButton = By.id("rcc-confirm-button");
 
-    // локатор верхней кнопки "Заказать"
     private final By orderButtonUp = By.className("Button_Button__ra12g");
-
-    // локатор нижней кнопки "Заказать"
     private final By orderButtonDown = By.xpath(".//div[@class='Home_FinishButton__1_cWm']/button[text()='Заказать']");
 
-    // локаторы для открывающегося списка вопросов
-    private final By zeroQuestion = By.xpath(".//*[@id='accordion__heading-0']");
-    private final By firstQuestion = By.xpath(".//*[@id='accordion__heading-1']");
-    private final By secondQuestion = By.xpath(".//*[@id='accordion__heading-2']");
-    private final By thirdQuestion = By.xpath(".//*[@id='accordion__heading-3']");
-    private final By fourthQuestion = By.xpath(".//*[@id='accordion__heading-4']");
-    private final By fifthQuestion = By.xpath(".//*[@id='accordion__heading-5']");
-    private final By sixthQuestion = By.xpath(".//*[@id='accordion__heading-6']");
-    private final By seventhQuestion = By.xpath(".//*[@id='accordion__heading-7']");
+    private final By firstQuestion = By.xpath(".//*[@id='accordion__heading-0']");
+    private final By secondQuestion = By.xpath(".//*[@id='accordion__heading-1']");
+    private final By thirdQuestion = By.xpath(".//*[@id='accordion__heading-2']");
+    private final By fourthQuestion = By.xpath(".//*[@id='accordion__heading-3']");
+    private final By fifthQuestion = By.xpath(".//*[@id='accordion__heading-4']");
+    private final By sixthQuestion = By.xpath(".//*[@id='accordion__heading-5']");
+    private final By seventhQuestion = By.xpath(".//*[@id='accordion__heading-6']");
+    private final By eighthQuestion = By.xpath(".//*[@id='accordion__heading-7']");
 
-    // конструктор класса
+    private final By firstAnswer = By.xpath(".//*[@id='accordion__panel-0']");
+    private final By secondAnswer = By.xpath(".//*[@id='accordion__panel-1']");
+    private final By thirdAnswer = By.xpath(".//*[@id='accordion__panel-2']");
+    private final By fourthAnswer = By.xpath(".//*[@id='accordion__panel-3']");
+    private final By fifthAnswer = By.xpath(".//*[@id='accordion__panel-4']");
+    private final By sixthAnswer = By.xpath(".//*[@id='accordion__panel-5']");
+    private final By seventhAnswer = By.xpath(".//*[@id='accordion__panel-6']");
+    private final By eighthAnswer = By.xpath(".//*[@id='accordion__panel-7']");
+
     public HomePageScooter(WebDriver driver)
     {
         this.driver = driver;
@@ -41,103 +43,82 @@ class HomePageScooter
         driver.findElement(cookieButton).click();
     }
 
-    // нажатие на верхнюю кнопку "Заказать"
-    public void clickOrderButtonUp()
+    public void clickOrderButton(String buttonChoice)
     {
-        driver.findElement(orderButtonUp).click();
+        if(buttonChoice == Constants.UP_ORDER_BUTTON)
+            driver.findElement(orderButtonUp).click();
+        else if(buttonChoice == Constants.DOWN_ORDER_BUTTON)
+            driver.findElement(orderButtonDown).click();
     }
 
-    // нажатие на нижнюю кнопку "Заказать"
-    public void clickOrderButtonDown()
+    public void waitingElement(By element)
     {
-        driver.findElement(orderButtonDown).click();
+        new WebDriverWait(driver, 2).until(ExpectedConditions.visibilityOfElementLocated(element));
     }
 
-
-    // метод для нажатия на первый открывающийся вопрос
-    public void Zero()
+    public void clickQuestionButton(int questionNumber)
     {
-        driver.findElement(zeroQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-0']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-0']/p")).getText();
-        String expectAnswer = "Сутки — 400 рублей. Оплата курьеру — наличными или картой.";
-        assertEquals(expectAnswer, actualAnswer);
+        if(questionNumber == 1)
+        {
+            driver.findElement(firstQuestion).click();
+            waitingElement(firstAnswer);
+        }
+        else if(questionNumber == 2)
+        {
+            driver.findElement(secondQuestion).click();
+            waitingElement(secondAnswer);
+        }
+        else if(questionNumber == 3)
+        {
+            driver.findElement(thirdQuestion).click();
+            waitingElement(thirdAnswer);
+        }
+        else if(questionNumber == 4)
+        {
+            driver.findElement(fourthQuestion).click();
+            waitingElement(fourthAnswer);
+        }
+        else if(questionNumber == 5)
+        {
+            driver.findElement(fifthQuestion).click();
+            waitingElement(fifthAnswer);
+        }
+        else if(questionNumber == 6)
+        {
+            driver.findElement(sixthQuestion).click();
+            waitingElement(sixthAnswer);
+        }
+        else if(questionNumber == 7)
+        {
+            driver.findElement(seventhQuestion).click();
+            waitingElement(seventhAnswer);
+        }
+        else if(questionNumber == 8)
+        {
+            driver.findElement(eighthQuestion).click();
+            waitingElement(eighthAnswer);
+        }
     }
 
-    public void FirstQuestion()
+    public String getAnswer(int answerNumber)
     {
-        driver.findElement(firstQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-1']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-1']/p")).getText();
-        String expectAnswer = "Пока что у нас так: один заказ — один самокат. Если хотите покататься с друзьями," +
-                " можете просто сделать несколько заказов — один за другим.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void SecondQuestion()
-    {
-        driver.findElement(secondQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-2']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-2']/p")).getText();
-        String expectAnswer = "Допустим, вы оформляете заказ на 8 мая. Мы привозим самокат 8 мая в течение дня. " +
-                "Отсчёт времени аренды начинается с момента, когда вы оплатите заказ курьеру. Если мы привезли " +
-                "самокат 8 мая в 20:30, суточная аренда закончится 9 мая в 20:30.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void ThirdQuestion()
-    {
-        driver.findElement(thirdQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-3']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-3']/p")).getText();
-        String expectAnswer = "Только начиная с завтрашнего дня. Но скоро станем расторопнее.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void FourthQuestion()
-    {
-        driver.findElement(fourthQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-4']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-4']/p")).getText();
-        String expectAnswer = "Пока что нет! Но если что-то срочное — всегда можно позвонить в поддержку по " +
-                "красивому номеру 1010.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void FifthQuestion()
-    {
-        driver.findElement(fifthQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-5']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-5']/p")).getText();
-        String expectAnswer = "Самокат приезжает к вам с полной зарядкой. Этого хватает на восемь суток — даже если " +
-                "будете кататься без передышек и во сне. Зарядка не понадобится.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void SixthQuestion()
-    {
-        driver.findElement(sixthQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-6']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-6']/p")).getText();
-        String expectAnswer = "Да, пока самокат не привезли. Штрафа не будет, объяснительной записки тоже не " +
-                "попросим. Все же свои.";
-        assertEquals(expectAnswer, actualAnswer);
-    }
-
-    public void SeventhQuestion()
-    {
-        driver.findElement(seventhQuestion).click();
-        new WebDriverWait(driver, 2)
-                .until(ExpectedConditions.visibilityOfElementLocated(By.xpath(".//div[@id='accordion__panel-7']/p")));
-        String actualAnswer = driver.findElement(By.xpath(".//div[@id='accordion__panel-7']/p")).getText();
-        String expectAnswer = "Да, обязательно. Всем самокатов! И Москве, и Московской области.";
-        assertEquals(expectAnswer, actualAnswer);
+        String answerString = "";
+        if(answerNumber == 1)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-0']/p")).getText();
+        else if(answerNumber == 2)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-1']/p")).getText();
+        else if(answerNumber == 3)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-2']/p")).getText();
+        else if(answerNumber == 4)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-3']/p")).getText();
+        else if(answerNumber == 5)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-4']/p")).getText();
+        else if(answerNumber == 6)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-5']/p")).getText();
+        else if(answerNumber == 7)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-6']/p")).getText();
+        else if(answerNumber == 8)
+            answerString = driver.findElement(By.xpath(".//div[@id='accordion__panel-7']/p")).getText();
+        return answerString;
     }
 }
