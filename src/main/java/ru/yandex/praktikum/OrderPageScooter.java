@@ -24,13 +24,12 @@ public class OrderPageScooter
     private final By buttonOrderFinal = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Заказать']");
     private final By buttonConfirm = By.xpath("//*[@class='Order_Buttons__1xGrp']/button[text()='Да']");
 
-    private final By confirmationOrder = By.className("Order_Modal__YZ-d3");
+    private final By confirmationOrder = By.xpath("//*[@class='Order_Modal__YZ-d3']");
 
     public OrderPageScooter(WebDriver driver)
     {
         this.driver = driver;
     }
-
 
     public void userName(String username)
     {
@@ -128,8 +127,8 @@ public class OrderPageScooter
         clickButtonConfirm();
     }
 
-    public boolean checkConfirmationOfAnOrder()
+    public String checkConfirmationOfAnOrder()
     {
-        return driver.findElement(confirmationOrder).isDisplayed();
+        return driver.findElement(confirmationOrder).getText();
     }
 }

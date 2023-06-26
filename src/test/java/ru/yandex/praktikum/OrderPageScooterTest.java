@@ -1,14 +1,15 @@
 package ru.yandex.praktikum;
 
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.After;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
-import static org.junit.Assert.assertTrue;
+import static org.hamcrest.CoreMatchers.containsString;
+import org.hamcrest.MatcherAssert;
 
 @RunWith(Parameterized.class)
 public class OrderPageScooterTest
@@ -48,10 +49,10 @@ public class OrderPageScooterTest
         Constants locator = new Constants();
         return new Object[][]
                 {
-                        {locator.UP_ORDER_BUTTON, "Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321", "19.06.2023", 2,
-                                "black", "Тут могла быть ваша реклама."},
-                        {locator.DOWN_ORDER_BUTTON, "Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки", "85556662211",
-                                "24.06.2023", 5, "grey", "А розовые самокаты есть у вас вообще?!"},
+                        {locator.UP_ORDER_BUTTON, "Андрей", "Петров", "ул. Ленина, д. 25, кв. 18", "Сокольники", "89995554321",
+                                "19.06.2023", 2, "black", "Тут могла быть ваша реклама."},
+                        {locator.DOWN_ORDER_BUTTON, "Светлана", "Сидорова", "ул. Плетёная, д. 9, кв. 341", "Кузьминки",
+                                "85556662211", "24.06.2023", 5, "grey", "А розовые самокаты есть у вас вообще?!"},
                 };
     }
 
@@ -61,6 +62,7 @@ public class OrderPageScooterTest
         ChromeOptions options = new ChromeOptions();
         driver = new ChromeDriver(options);
         driver.get("https://qa-scooter.praktikum-services.ru/");
+
     }
 
     @Test
@@ -70,10 +72,10 @@ public class OrderPageScooterTest
         objHomePage.clickCookieButton();
         objHomePage.clickOrderButton(buttonChoice);
         OrderPageScooter objOrderPage = new OrderPageScooter(driver);
-        objOrderPage.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days,
-                countDays, colorScooter, textComments);
+        objOrderPage.order(username, usersurname, useraddress, nameMetroStation, userphonenumber, days, countDays,
+                colorScooter, textComments);
 
-        assertTrue("Отсутствует окно подтверждения.", objOrderPage.checkConfirmationOfAnOrder());
+        MatcherAssert.assertThat(objOrderPage.checkConfirmationOfAnOrder(), containsString("Заказ оформлен"));
     }
 
     @After
